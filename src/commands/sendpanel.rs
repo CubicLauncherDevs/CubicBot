@@ -5,7 +5,7 @@ use serenity::prelude::Context;
 
 use crate::commands::{BoxedError, Command, CommandResult};
 use crate::services;
-
+// santiago y motstaff
 const ALLOWED: [UserId; 2] = [
     UserId::new(1224181541127717034),
     UserId::new(962589013921918996),
