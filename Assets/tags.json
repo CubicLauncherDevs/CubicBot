@@ -1,0 +1,114 @@
+[
+  {
+    "name": "docs",
+    "title": "Documentación de CubicLauncher",
+    "aliases": ["documentacion", "guias", "manual"],
+    "summary": "Consulta las guías oficiales para instalar CubicLauncher, configurar cuentas e instancias, gestionar mods y personalizar el launcher con temas.",
+    "url": "https://dev.cubiclauncher.org/docs"
+  },
+  {
+    "name": "instalacion",
+    "title": "Instalación de CubicLauncher",
+    "aliases": ["instalar", "install", "descargar", "windows", "linux", "macos"],
+    "summary": "Descarga el paquete correspondiente a tu sistema operativo.\n• **Windows:** ejecuta el instalador `.exe` o `.msi`.\n• **Linux:** utiliza el paquete de tu distribución o la AppImage; hay guías específicas para Arch y Nix.\n• **macOS:** abre el `.dmg` y mueve CubicLauncher a Aplicaciones.\n\nMinecraft necesita un entorno Java compatible; puedes configurarlo desde el launcher.",
+    "url": "https://dev.cubiclauncher.org/docs/es-ES/Comenzando/install"
+  },
+  {
+    "name": "java",
+    "title": "Java: descargar y configurar un entorno",
+    "aliases": ["jre", "jdk", "instalar-java", "descargar-java"],
+    "summary": "Minecraft Java Edition necesita un entorno Java para ejecutarse.\n1. Abre **Configuración → Java** en CubicLauncher.\n2. Abre el menú de entornos de Java y descarga el que corresponda a tu versión de Minecraft.\n3. También puedes utilizar un JRE externo.\n\nEl JRE administrado no se instala automáticamente: debes descargarlo desde esa sección.",
+    "url": "https://dev.cubiclauncher.org/docs/es-ES/Uso/java"
+  },
+  {
+    "name": "jvm",
+    "title": "Parámetros de la JVM",
+    "aliases": ["argumentos", "parametros-java", "parametros-jvm", "args"],
+    "summary": "Abre **Configuración → Java → Parámetros de la JVM** e introduce los argumentos separados por espacios. Cierra Minecraft y vuelve a iniciarlo para aplicar los cambios.\n\nSi ya configuraste la RAM desde el launcher, no dupliques los ajustes con `-Xms` y `-Xmx`. Estos parámetros no garantizan más FPS: su efecto depende de tu equipo, Java y los mods.",
+    "url": "https://dev.cubiclauncher.org/docs/es-ES/Uso/java#parametros-de-la-jvm"
+  },
+  {
+    "name": "cuentas",
+    "title": "Configurar una cuenta de usuario",
+    "aliases": ["cuenta", "usuario", "login", "microsoft", "offline", "authlib", "elyby"],
+    "summary": "1. Abre la sección de **usuario** en la barra lateral.\n2. Elige el tipo de cuenta: sin conexión, Microsoft o un servidor externo compatible con Authlib.\n3. Sigue las instrucciones en pantalla.\n\nPara una cuenta sin conexión, introduce tu nombre de usuario. Para Microsoft, utiliza el inicio de sesión oficial. Para Authlib, selecciona el servidor de autenticación e inicia sesión con tu cuenta de ese servicio.",
+    "url": "https://dev.cubiclauncher.org/docs/es-ES/Uso/accounts"
+  },
+  {
+    "name": "instancias",
+    "title": "Crear y gestionar instancias",
+    "aliases": ["instancia", "crear-instancia", "instances", "versiones"],
+    "summary": "Cada instancia mantiene su propia versión de Minecraft, mods, recursos y configuración.\n1. Pulsa **Crear Instancia** en la barra lateral.\n2. Elige un nombre y una versión; si falta, descárgala primero desde el botón de descargas.\n3. Selecciona un icono y pulsa **Crear**.\n\nPuedes abrir la carpeta de la instancia desde **Detalles**. Las instancias se almacenan en `.cubic/instances/`.",
+    "url": "https://dev.cubiclauncher.org/docs/es-ES/Uso/instances"
+  },
+  {
+    "name": "mods",
+    "title": "Instalar mods desde el Market",
+    "aliases": ["mod", "market", "modrinth", "curseforge", "fabric", "forge", "neoforge", "quilt"],
+    "summary": "1. Selecciona una instancia con **Fabric, Forge, NeoForge o Quilt**.\n2. Abre el widget **Market** de la instancia.\n3. Elige **Modrinth** o **CurseForge** y busca el mod.\n\nEl Market filtra las versiones compatibles con tu instancia. El proveedor **Local** permite activar o desactivar mods instalados. En una instancia Vanilla, el Market de mods no está disponible.",
+    "url": "https://dev.cubiclauncher.org/docs/es-ES/Uso/mods"
+  },
+  {
+    "name": "instalar-tema",
+    "title": "Cómo instalar un tema",
+    "aliases": ["tema", "temas", "theme", "themes", "instalar-theme", "cbth"],
+    "summary": "1. Descarga un tema como **ZIP o CBTH** desde [el catálogo](https://www.cubiclauncher.org/themes) o [el repositorio oficial](https://github.com/CubicLauncherDevs/Themes).\n2. Arrastra el archivo descargado a la ventana de **CubicLauncher**; se instalará automáticamente.\n3. Abre el selector de temas y elige el que acabas de instalar.",
+    "url": "https://dev.cubiclauncher.org/docs/es-ES/Uso/instalar-tema"
+  },
+  {
+    "name": "crear-temas",
+    "title": "Cómo crear temas personalizados",
+    "aliases": ["crear-theme", "crear-themes", "hacer-themes", "crear-tema", "toml", "inject-css"],
+    "summary": "Para temas nuevos se recomienda el formato **V2**:\n• `Meta.toml`: nombre, autor, versión y metadatos.\n• `Definition.toml`: colores, fuentes, fondos, iconos y otras propiedades visuales.\n• Opcionalmente, incluye `Inject.css` y recursos con rutas relativas.\n\nConsulta los formatos y ejemplos de la guía, empaqueta el tema y pruébalo localmente antes de publicarlo.",
+    "url": "https://dev.cubiclauncher.org/docs/es-ES/guias/hacer-themes"
+  },
+  {
+    "name": "publicar-tema",
+    "title": "Publicar un tema en el catálogo oficial",
+    "aliases": ["subir-tema", "publicar-theme", "subir-theme", "compartir-tema"],
+    "summary": "1. Crea `src/TuAutor/TuTema/theme.md` en el repositorio oficial de Themes.\n2. Añade la carpeta `V1/` con `Meta.toml`, `Definition.toml`, el fondo y los recursos del tema.\n3. Abre un **Pull Request**.\n\nTras aceptarlo, el flujo automático prepara el catálogo y sube los recursos. Las carpetas `V1`, `V2`, etc. son versiones del tema, no del formato. El archivo de verificación `vflag.txt` lo añade únicamente el staff.",
+    "url": "https://dev.cubiclauncher.org/docs/es-ES/guias/hacer-themes#publicar-un-theme"
+  },
+  {
+    "name": "arch",
+    "title": "Instalación en Arch Linux",
+    "aliases": ["archlinux", "aur", "yay", "paru", "pkgbuild"],
+    "summary": "Puedes instalar CubicLauncher desde el **AUR**:\n```bash\nyay -S cubiclauncher\n```\nO utiliza `paru -S cubiclauncher`. La guía también explica cómo compilar con el `PKGBUILD` oficial y `makepkg -si`.\n\nEn Arch, actualiza mediante el gestor de paquetes o recompilando el paquete; el autoactualizador del launcher no funciona con esta instalación.",
+    "url": "https://dev.cubiclauncher.org/docs/es-ES/guias/arch"
+  },
+  {
+    "name": "nix",
+    "title": "Instalación en Nix y NixOS",
+    "aliases": ["nixos", "flake", "flakes"],
+    "summary": "Necesitas Nix con **flakes** y **nix-command** habilitados.\n\nInstalar en tu perfil:\n```bash\nnix profile install github:CubicLauncherDevs/CubicLauncher\n```\nProbar sin instalar:\n```bash\nnix run github:CubicLauncherDevs/CubicLauncher\n```\nLas actualizaciones se gestionan mediante Nix. Consulta la guía para los prerrequisitos y problemas comunes.",
+    "url": "https://dev.cubiclauncher.org/docs/es-ES/guias/nix"
+  },
+  {
+    "name": "soporte",
+    "title": "Solicitar soporte o reportar un error",
+    "aliases": ["ayuda", "support", "ticket", "bug", "errores", "reportar"],
+    "summary": "Antes de pedir ayuda, revisa la documentación, comprueba que usas la última versión y busca si el problema ya fue reportado.\n\nIncluye **versión de CubicLauncher, sistema operativo, descripción del problema, pasos para reproducirlo y logs o capturas relevantes**. Puedes usar GitHub Issues, el canal público de soporte de Discord o un ticket para atención personalizada.",
+    "url": "https://dev.cubiclauncher.org/docs/es-ES/guias/soporte"
+  },
+  {
+    "name": "config",
+    "title": "Configuración: documentación en construcción",
+    "aliases": ["configuracion", "ajustes", "settings"],
+    "summary": "La sección **Config** de la documentación está actualmente en construcción. Para configurar Java, cuentas o instancias, consulta sus guías específicas mediante `/tag tema:java`, `/tag tema:cuentas` o `/tag tema:instancias`.",
+    "url": "https://dev.cubiclauncher.org/docs/es-ES/Avanzado/config"
+  },
+  {
+    "name": "debug",
+    "title": "Debug: documentación en construcción",
+    "aliases": ["depuracion", "depurar", "logs"],
+    "summary": "La sección **Debug** de la documentación está actualmente en construcción. Si necesitas ayuda con un error, reúne los logs, capturas y pasos para reproducirlo, y consulta `/tag tema:soporte` para conocer los canales de asistencia.",
+    "url": "https://dev.cubiclauncher.org/docs/es-ES/Avanzado/debug"
+  },
+  {
+    "name": "dawn",
+    "title": "Instalar Dawn Client",
+    "aliases": ["dawn-client", "dawnclient", "dawn-standalone"],
+    "summary": "1. Descarga **Download Standalone (Fabric Mod Jar)** desde [dawn.gg](https://dawn.gg/).\n2. Crea una instancia **Fabric**; la guía recomienda Minecraft **1.20.1**.\n3. Copia el `.jar` de Dawn a la carpeta `mods/` de esa instancia.\n4. Instala **Fabric API** para la misma versión desde el Market y pulsa **Jugar**.\n\nLa guía requiere Minecraft 1.17 o superior y Fabric.",
+    "url": "https://dev.cubiclauncher.org/docs/es-ES/Clientes/dawn-client"
+  }
+]

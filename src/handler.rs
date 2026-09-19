@@ -1,6 +1,6 @@
 use std::env;
 
-use serenity::all::{Channel, EditInteractionResponse, Member};
+use serenity::all::{Channel, CreateAutocompleteResponse, EditInteractionResponse, Member};
 use serenity::async_trait;
 use serenity::builder::{CreateInteractionResponse, CreateInteractionResponseMessage};
 use serenity::model::application::Interaction;
@@ -17,6 +17,20 @@ pub struct Handler;
 impl EventHandler for Handler {
     async fn interaction_create(&self, ctx: Context, interaction: Interaction) {
         match interaction {
+            Interaction::Autocomplete(command) => {
+                let all_cmds = commands::all_commands();
+                let response = all_cmds
+                    .iter()
+                    .find(|cmd| cmd.name() == command.data.name)
+                    .map(|cmd| cmd.autocomplete(&command))
+                    .unwrap_or_else(CreateAutocompleteResponse::new);
+                if let Err(why) = command
+                    .create_response(&ctx.http, CreateInteractionResponse::Autocomplete(response))
+                    .await
+                {
+                    tracing::error!(error = ?why, command = %command.data.name, "Error al responder autocompletado");
+                }
+            }
             Interaction::Command(command) => {
                 let cmd_name = command.data.name.clone();
                 let all_cmds = commands::all_commands();
@@ -42,12 +56,12 @@ impl EventHandler for Handler {
                             tracing::error!(error = ?why, "Error al responder comando");
                         }
                     }
-                    Ok(CommandResult::Deferred(fut)) => {
+                    Ok(CommandResult::Deferred { future, ephemeral }) => {
                         if let Err(why) = command
                             .create_response(
                                 &ctx.http,
                                 CreateInteractionResponse::Defer(
-                                    CreateInteractionResponseMessage::new(),
+                                    CreateInteractionResponseMessage::new().ephemeral(ephemeral),
                                 ),
                             )
                             .await
@@ -55,13 +69,14 @@ impl EventHandler for Handler {
                             tracing::error!(error = ?why, "Cannot defer on work");
                             return;
                         }
-                        match fut.await {
+                        match future.await {
                             Ok(edit) => {
                                 if let Err(why) = command.edit_response(&ctx.http, edit).await {
                                     tracing::error!(error = ?why, "Error al editar mensaje");
                                 }
                             }
                             Err(why) => {
+                                tracing::error!(error = %why, "Error ejecutando comando diferido");
                                 let _ = command
                                     .edit_response(
                                         &ctx.http,
@@ -189,16 +204,32 @@ impl EventHandler for Handler {
     async fn ready(&self, ctx: Context, ready: Ready) {
         tracing::info!(user = %ready.user.name, "Bot conectado");
 
-        let guild_id = GuildId::new(
-            env::var("GUILD_ID")
-                .expect("Expected GUILD_ID in environment")
-                .parse()
-                .expect("GUILD_ID must be an integer"),
-        );
+        let guild_id = match env::var("GUILD_ID") {
+            Ok(value) => match value.parse::<u64>() {
+                Ok(id) if id != 0 => GuildId::new(id),
+                _ => {
+                    tracing::error!(
+                        "GUILD_ID debe ser el ID numérico del servidor, mayor que cero. No se registraron los comandos slash."
+                    );
+                    return;
+                }
+            },
+            Err(why) => {
+                tracing::error!(error = ?why, "No se pudo leer GUILD_ID. Configura el ID del servidor y reinicia el bot para registrar los comandos slash.");
+                return;
+            }
+        };
 
         let all_cmds = commands::all_commands();
         let commands: Vec<_> = all_cmds.iter().map(|cmd| cmd.register()).collect();
 
-        let _ = guild_id.set_commands(&ctx.http, commands).await;
+        match guild_id.set_commands(&ctx.http, commands).await {
+            Ok(registered) => {
+                tracing::info!(guild = %guild_id, count = registered.len(), "Comandos slash registrados");
+            }
+            Err(why) => {
+                tracing::error!(error = ?why, guild = %guild_id, "Error al registrar comandos slash. Comprueba GUILD_ID y que el bot esté instalado en ese servidor con el scope applications.commands.");
+            }
+        }
     }
 }
